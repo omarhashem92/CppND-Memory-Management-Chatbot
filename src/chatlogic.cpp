@@ -18,10 +18,10 @@ ChatLogic::ChatLogic()
     ////
 
     // create instance of chatbot
-    _chatBot = new ChatBot("../images/chatbot.png");
+    //_chatBot = new ChatBot("../images/chatbot.png");
 
     // add pointer to chatlogic so that chatbot answers can be passed on to the GUI
-    _chatBot->SetChatLogicHandle(this);
+    //_chatBot->SetChatLogicHandle(this);
 
     ////
     //// EOF STUDENT CODE
@@ -76,7 +76,6 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
 {
     // load file with answer graph elements
     std::ifstream file(filename);
-
     // check for file availability and process it line by line
     if (file)
     {
@@ -163,9 +162,9 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                             // create new edge
                             //GraphEdge *edge = new GraphEdge(id);
                             std::unique_ptr<GraphEdge> edge = std::make_unique<GraphEdge>(id);
-                            edge->SetChildNode(childNode->get());
-                            edge->SetParentNode(parentNode->get());
-                            _edges.push_back(edge.get());
+                            edge->SetChildNode((*childNode).get()); 
+                            edge->SetParentNode((*parentNode).get()); 
+                            //edges.push_back(edge.get());
 
                             // find all keywords for current node
                             AddAllTokensToElement("KEYWORD", tokens, *edge);
@@ -208,7 +207,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
 
             if (rootNode == nullptr)
             {
-                rootNode = it->get(); // assign current node to root
+                rootNode = (*it).get();
             }
             else
             {
